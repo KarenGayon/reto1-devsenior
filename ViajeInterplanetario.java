@@ -27,5 +27,26 @@ public class ViajeInterplanetario {
         }
     }
 
-    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+
+        // Lista de planetas del sistema solar
+        ArrayList<Planeta> planetas = new ArrayList<>();
+        planetas.add(new Planeta("Mercurio", 91.69));
+        planetas.add(new Planeta("Venus", 41.40));
+        planetas.add(new Planeta("Marte", 78.34));
+        planetas.add(new Planeta("Júpiter", 628.73));
+        planetas.add(new Planeta("Saturno", 1275.0));
+        planetas.add(new Planeta("Urano", 2721.0));
+        planetas.add(new Planeta("Neptuno", 4351.0));
+
+        // Creación de naves
+        ArrayList<Nave> naves = new ArrayList<>();
+        naves.add(new Nave("Nave A", 500000, 100000000, 2000));
+        naves.add(new Nave("Nave B", 600000, 150000000, 2500));
+        naves.add(new Nave("Nave C", 450000, 900000000, 180030));
+
+        
+    }
 }
