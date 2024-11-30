@@ -47,6 +47,56 @@ public class ViajeInterplanetario {
         naves.add(new Nave("Nave B", 600000, 150000000, 2500));
         naves.add(new Nave("Nave C", 450000, 900000000, 180030));
 
+        // Selección de nave
+        System.out.println("Selecciona tu nave:");
+        for (int i = 0; i < naves.size(); i++) {
+            System.out.println((i + 1) + ". " + naves.get(i).nombre + " - Velocidad: " + naves.get(i).velocidad + " km/h");
+        }
+        System.out.print("Opción: ");
+        int opcionNave = scanner.nextInt();
+        Nave naveSeleccionada = naves.get(opcionNave - 1);
+
+        // Selección de destino
+        System.out.println("Destinos disponibles:");
+        for (int i = 0; i < planetas.size(); i++) {
+            System.out.println((i + 1) + ". " + planetas.get(i).nombre);
+        }
+        System.out.print("Selecciona tu destino (1-" + planetas.size() + "): ");
+        int opcionDestino = scanner.nextInt();
+        Planeta destino = planetas.get(opcionDestino - 1);
+
+        double distanciaKm = destino.distancia * 1000000;
+        double tiempoHoras = distanciaKm / naveSeleccionada.velocidad;
+        double combustibleRequerido = distanciaKm / 10;
+        double oxigenoRequerido = tiempoHoras;
+
+        System.out.printf("Distancia: %.2f km%nTiempo estimado: %.2f horas%n", distanciaKm, tiempoHoras);
+        System.out.printf("Combustible requerido: %.2f litros%nOxígeno requerido: %.2f horas%n", combustibleRequerido, oxigenoRequerido);
+
+        // Ajuste de recursos
+        System.out.println("\n¿Deseas ajustar los recursos antes del viaje? (SI/NO)");
+        String respuesta = scanner.next();
+        if (respuesta.equalsIgnoreCase("SI")) {
+            System.out.print("Introduce la cantidad de combustible adicional: ");
+            double extraCombustible = scanner.nextDouble();
+            System.out.print("Introduce la cantidad de oxígeno adicional: ");
+            double extraOxigeno = scanner.nextDouble();
+
+            naveSeleccionada.combustible += extraCombustible;
+            naveSeleccionada.oxigeno += extraOxigeno;
+        }
+
+        // Recalcular y verificar si los recursos son suficientes
+        if (naveSeleccionada.combustible < combustibleRequerido) {
+            System.out.printf("Combustible insuficiente. Necesitas al menos %.2f litros y tienes %.2f litros.%n",
+                    combustibleRequerido, naveSeleccionada.combustible);
+            return;
+        }
+        if (naveSeleccionada.oxigeno < oxigenoRequerido) {
+            System.out.printf("Oxígeno insuficiente. Necesitas al menos %.2f horas de oxígeno y tienes %.2f horas.%n",
+                    oxigenoRequerido, naveSeleccionada.oxigeno);
+            return;
+        }
+
         
-    }
 }
