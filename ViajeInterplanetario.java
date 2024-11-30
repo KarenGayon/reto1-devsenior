@@ -98,5 +98,71 @@ public class ViajeInterplanetario {
             return;
         }
 
-        
+        // Simulación del viaje
+        System.out.println("\n--- Iniciando viaje interplanetario ---");
+        double distanciaRecorrida = 0;
+        int contadorEventos = 0;
+
+        while (distanciaRecorrida < distanciaKm) {
+    // Mostrar progreso del viaje
+            distanciaRecorrida += naveSeleccionada.velocidad;
+            naveSeleccionada.combustible -= naveSeleccionada.velocidad / 10;
+            naveSeleccionada.oxigeno -= 1;
+            double progreso = (distanciaRecorrida / distanciaKm) * 100;
+
+            System.out.printf("Progreso: %.2f%% - Combustible restante: %.2f litros - Oxígeno restante: %.2f horas%n",
+            progreso, naveSeleccionada.combustible, naveSeleccionada.oxigeno);
+
+    // Generar eventos aleatorios si el contador es menor a 2
+            if (contadorEventos < 2 && random.nextInt(10) < 1) { // Probabilidad del 10% de que ocurra un evento
+                contadorEventos++;
+                System.out.println("¡Evento inesperado!");
+                int evento = random.nextInt(3);
+                switch (evento) {
+                case 0:
+                    System.out.println("Falla en el sistema. ¿Reparar? (SI/NO)");
+                    String decision = scanner.next();
+                  if (decision.equalsIgnoreCase("SI")) {
+                    naveSeleccionada.oxigeno -= 5;
+                    System.out.println("Falla reparada. Continuando viaje...");
+                 } else {
+                    System.out.println("Viaje abortado.");
+                    return;
+                    }
+                break;
+                case 1:
+                    System.out.println("Impacto de asteroide. Pérdida de combustible.");
+                    naveSeleccionada.combustible -= 5000;
+                break;
+                case 2:
+                     System.out.println("Desvío inesperado. ¿Continuar o cambiar rumbo? (continuar/cambiar)");
+                     if (scanner.next().equalsIgnoreCase("cambiar")) {
+                    System.out.println("Corrigiendo rumbo...");
+                    distanciaKm -= 100_000;
+                     } else {
+                    System.out.println("Continuando con mayor distancia.");
+                    distanciaKm += 100_000;
+                     }
+                break;
+        }
+    }
+
+    // Verificar recursos
+    if (naveSeleccionada.combustible <= 0 || naveSeleccionada.oxigeno <= 0) {
+        System.out.println("Recursos agotados. El viaje ha fracasado.");
+        return;
+    }
+
+    // Simular una hora de viaje
+    try {
+        Thread.sleep(1000);
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+    }
+}
+
+        System.out.println("\n--- Viaje completado ---");
+        System.out.println("Has llegado a " + destino.nombre);
+        System.out.printf("Combustible restante: %.2f litros%nOxígeno restante: %.2f horas%n", naveSeleccionada.combustible, naveSeleccionada.oxigeno);
+    }
 }
